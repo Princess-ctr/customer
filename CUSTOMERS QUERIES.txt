@@ -1,0 +1,45 @@
+
+--retrieve the total number of customers from each region.
+select region, count(*) AS total_number_of_customers
+from customer
+group by region;
+
+--find the most popular subscription type by the number of customers.
+select SubscriptionType, Count(*) AS total_number_of_customers
+from customer
+group by SubscriptionType
+order by total_number_of_customers DESC;
+
+--find customers who canceled their subscription within 6 months.
+  select customerID, SubscriptionType, datediff(SubscriptionEnd, SubscriptionStart) as d
+  from customer
+  where datediff(SubscriptionEnd, SubscriptionStart) <= 183
+  limit 5;
+
+
+-- calculate the average subscription duration for all customers.
+select avg(datediff(SubscriptionEnd, SubscriptionStart))
+from customer;
+
+
+--find customers with subscriptions longer than 12 months.
+select customerID, SubscriptionType, datediff(SubscriptionEnd,SubscriptionStart) as d
+from customer
+where datediff(SubscriptionEnd,SubscriptionStart)> 366
+limit 5;
+
+--calculate total revenue by subscription type.
+ select SubscriptionType, sum(Revenue) AS total_revenue
+ from customer
+ group by SubscriptionType;
+
+--find the top 3 regions by subscription cancellations.
+select Region,SubscriptionType,Canceled
+from customer
+group by Region
+order by Canceled DESC;
+
+--find the total number of active and canceled subscriptions.
+select Canceled, count(Canceled) as TOTAL_NUMBER_OF_ACTIVE_AND_CANCELED_SUBCRIPTIONS
+from customer
+group by Canceled;

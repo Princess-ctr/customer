@@ -1,0 +1,49 @@
+--retrieve the total sales for each product category.
+select product, sum(sales) AS total_sales
+from sales
+group by product;
+
+--find the number of sales transactions in each region.
+select region, count(sales) AS number_of_sales
+from sales
+group by region;
+
+--find the highest-selling product by total sales value.
+select product,sum(sales) AS total_sales
+from sales
+group by product
+order by total_sales DESC;
+
+--calculate total revenue per product.
+select product, sum(sales) AS total_revenue
+from sales
+order by product;
+
+--calculate monthly sales totals for the current year
+select month,year,sum(sales) AS total_sales
+from sales
+WHERE YEAR=2024
+group by MONTH;
+
+--find the top 5 customers by total purchase amount.
+select CustomerId, sum(sales) AS total_sales
+from sales
+group by CustomerId
+order by TOTAL_SALES DESC
+limit 5;
+
+--calculate the percentage of total sales contributed by each region.
+select region, sum(sales) AS region_sales,
+sum(sales)* 100/ (select sum(sales) from sales) AS sales_percentage
+from sales
+group by region
+order by sales_percentage DESC;
+
+--identify products with no sales in the last quarter.
+ select Product, Sales, OrderDate
+ from sales
+ where OrderDate between '2023-10-01' and '2023-12-31'
+ group by Product
+ having min(sales)=0;
+
+
